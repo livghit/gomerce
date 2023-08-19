@@ -1,1 +1,3 @@
-# Creating a Template for creating Shopify storefronts with go , htmx tailwind and alpine js
+<div>
+   <p> Creating an App Template using <a href="https://github.com/bold-commerce/go-shopify">bold-commerce/go-shopify</a></p>
+</div>
