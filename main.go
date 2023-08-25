@@ -3,22 +3,35 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"os"
 
 	shopify "github.com/bold-commerce/go-shopify/v3"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	app := shopify.App{
-		ApiKey:      "load from env",
-		ApiSecret:   "load from env",
-		RedirectUrl: "load from env",
-		Scope:       "read_products",
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
 
-	client := shopify.NewClient(app, "load from env", "load from env")
+	api_key := os.Getenv("API_KEY")
+	api_secret := os.Getenv("API_SECRET")
+	redirect_url := os.Getenv("REDIRECT_URL")
+	admin_token := os.Getenv("ADMIN_TOKEN")
+	shop_name := os.Getenv("SHOP_NAME")
+
+	app := shopify.App{
+		ApiKey:      api_key,
+		ApiSecret:   api_secret,
+		RedirectUrl: redirect_url,
+		Scope:       "read_products , read_customers",
+	}
+
+	client := shopify.NewClient(app, shop_name, admin_token)
 
 	// Fetch the number of products.
-	products, err := client.Product.List(nil)
+	products, err := client.Customer.List(nil)
 	if err != nil {
 		log.Printf("Error happended while fatching products:  %d", err)
 	}
